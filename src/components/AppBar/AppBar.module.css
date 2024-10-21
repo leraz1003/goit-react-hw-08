@@ -1,0 +1,14 @@
+.header {
+  padding: 15px; /* Відступи всередині хедера */
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тінь */
+  border-radius: 12px;
+}
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 20px;
+  background-color: #f8f9fa;
+}

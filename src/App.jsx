@@ -1,12 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import ContactForm from "./components/ContactForm/ContactForm";
-import ContactList from "./components/ContactList/ContactList";
 
-import { useEffect } from "react";
-import { fetchContacts } from "./redux/contacts/operations";
-import { selectLoading } from "./redux/contacts/selectors";
-import SearchBox from "./components/SearchBox/SearchBox";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
@@ -16,18 +9,33 @@ import { PrivateRoute } from "./components/Route/PrivateRoute";
 import NotFound from "./pages/NotFound/NotFound";
 import { RestrictedRoute } from "./components/Route/RestrictedRoute";
 import Layout from "./components/Layout/Layout";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { refreshUser } from "./redux/auth/operation";
+import { selectIsLoggedIn, selectIsRefreshing } from "./redux/auth/selectors";
+import { fetchContacts } from "./redux/contacts/operations";
 
 function App() {
-  const loading = useSelector(selectLoading);
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
-  return (
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchContacts()); // Витягуємо контакти, якщо користувач залогінений
+    }
+  }, [dispatch, isLoggedIn]);
+
+  const isRefreshing = useSelector(selectIsRefreshing);
+
+  return isRefreshing ? null : (
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<HomePage />} />
+          <Route index element={<HomePage />} />
           <Route
             path="/register"
             element={
@@ -55,12 +63,6 @@ function App() {
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
-
-      <h1>PhoneBook</h1>
-      <ContactForm />
-      <SearchBox />
-      {loading && <h2>Loading ...</h2>}
-      <ContactList />
     </>
   );
 }

@@ -63,9 +63,20 @@ export const contactReducer = slice.reducer;
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],
   (contacts, filter) => {
-    console.log("contacts", contacts);
     return contacts.filter((contact) =>
       contact.name.toLowerCase().trim().includes(filter.toLowerCase().trim())
     );
   }
 );
+// export const selectFilteredContacts = createSelector(
+//   [selectContacts, selectNameFilter],
+//   (contacts, filter) => {
+//     const lowerCasedFilter = filter.toLowerCase().trim();
+
+//     return contacts.filter(
+//       (contact) =>
+//         contact.name.toLowerCase().includes(lowerCasedFilter) ||
+//         contact.number.includes(lowerCasedFilter) // Фільтр по номеру
+//     );
+//   }
+// );

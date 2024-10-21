@@ -1,8 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import s from "./ContactForm.module.css";
+
 import { nanoid } from "nanoid";
 import * as Yup from "yup";
-import clsx from "clsx";
+
 import { useDispatch } from "react-redux";
 import { addContact } from "../../redux/contacts/operations";
 
@@ -25,7 +25,7 @@ const ContactForm = () => {
     name: Yup.string()
       .min(3, "Too Short!")
       .max(50, "Too Long!")
-      .matches(/^[a-zA-Z]+$/, "The input should contain only letters")
+
       .required("Required"),
     number: Yup.string()
       .min(3, "Too Short!")
@@ -33,36 +33,66 @@ const ContactForm = () => {
       .required("Required"),
   });
 
+  const formatPhoneNumber = (value) => {
+    const phoneNumber = value.replace(/\D/g, ""); // Видаляємо все, крім цифр
+    if (phoneNumber.length < 4) return phoneNumber;
+    if (phoneNumber.length < 7)
+      return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3)}`;
+    return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(
+      3,
+      6
+    )}-${phoneNumber.slice(6, 10)}`;
+  };
+
   return (
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={FeedbackSchema}
     >
-      {({ isValid, dirty }) => (
-        <Form className={s.form}>
-          <label className={s.label} htmlFor={nameFieldId}>
-            Name
-          </label>
-          <Field
-            id={nameFieldId}
-            className={clsx(s.input, s.name)}
-            type="text"
-            name="name"
-          />
-          <ErrorMessage name="name" component="span" className={s.error} />
-          <label className={s.label} htmlFor={phoneFieldId}>
-            Number
-          </label>
-          <Field
-            id={phoneFieldId}
-            className={s.input}
-            type="text"
-            name="number"
-          />
-          <ErrorMessage name="number" component="span" className={s.error} />
+      {({ isValid, dirty, setFieldValue }) => (
+        <Form className="space-y-4 bg-white p-6 rounded-lg shadow-md max-w-md ml-8 mt-12 mb-15">
+          <div className="form-control">
+            <label className="label" htmlFor={nameFieldId}>
+              <span className="label-text font-semibold">Name</span>
+            </label>
+            <Field
+              id={nameFieldId}
+              className="input input-bordered w-full"
+              type="text"
+              name="name"
+            />
+            <ErrorMessage
+              name="name"
+              component="span"
+              className="text-red-500 text-sm"
+            />
+          </div>
+
+          <div className="form-control">
+            <label className="label" htmlFor={phoneFieldId}>
+              <span className="label-text font-semibold">Number</span>
+            </label>
+            <Field
+              id={phoneFieldId}
+              className="input input-bordered w-full"
+              type="text"
+              name="number"
+              onChange={(e) =>
+                setFieldValue("number", formatPhoneNumber(e.target.value))
+              }
+            />
+            <ErrorMessage
+              name="number"
+              component="span"
+              className="text-red-500 text-sm"
+            />
+          </div>
+
           <button
-            className={clsx(s.button, { [s.disabled]: !isValid || !dirty })}
+            className={`btn btn-primary w-full ${
+              (!isValid || !dirty) && "btn-disabled"
+            }`}
             type="submit"
             disabled={!isValid || !dirty}
           >

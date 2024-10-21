@@ -1,0 +1,20 @@
+.link {
+  color: gray;
+  text-decoration: none;
+  font-size: 18px;
+  transition: color 0.3s;
+}
+
+.link:hover {
+  color: black;
+}
+
+.activeLink {
+  color: black;
+  font-weight: bold;
+}
+
+.list {
+  display: flex;
+  gap: 20px;
+}

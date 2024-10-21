@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import s from "./SearchBox.module.css";
+// import s from "./SearchBox.module.css";
 import { selectNameFilter } from "../../redux/filters/selectors";
 import { changeFilter } from "../../redux/filters/slice";
 
@@ -8,17 +8,18 @@ const SearchBox = () => {
   const filter = useSelector(selectNameFilter);
 
   return (
-    <>
-      <label className={s.label}>
-        Find contacts by name
+    <div className="flex justify-start mt-10 ml-8">
+      <div className="join">
         <input
-          className={s.input}
+          className="input input-bordered join-item w-full max-w-xs focus:outline-none"
+          placeholder="Search"
           type="text"
           value={filter}
           onChange={(e) => dispatch(changeFilter(e.target.value))}
         />
-      </label>
-    </>
+        <button className="btn btn-primary join-item">Search</button>
+      </div>
+    </div>
   );
 };
 
