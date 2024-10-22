@@ -16,6 +16,17 @@ const EditModal = ({ contact, onClose }) => {
       dispatch(fetchContacts()); // Повторно витягуємо контакти після редагування
     });
   };
+
+  const formatPhoneNumber = (value) => {
+    const phoneNumber = value.replace(/\D/g, ""); // Видаляємо все, крім цифр
+    if (phoneNumber.length < 4) return phoneNumber;
+    if (phoneNumber.length < 7)
+      return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(3)}`;
+    return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(
+      3,
+      6
+    )}-${phoneNumber.slice(6, 10)}`;
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg relative mt-20">
@@ -40,8 +51,11 @@ const EditModal = ({ contact, onClose }) => {
             type="text"
             className="input input-bordered w-full mt-4"
             value={number} // Прив'язуємо значення до стану
-            onChange={(e) => setNumber(e.target.value)}
             placeholder="Edit number"
+            onChange={(e) => {
+              const formattedValue = formatPhoneNumber(e.target.value);
+              setNumber(formattedValue);
+            }}
           />
         </div>
 
