@@ -1,5 +1,10 @@
 import { createSelector, createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { addContact, deleteContact, fetchContacts } from "./operations";
+import {
+  addContact,
+  deleteContact,
+  editContact,
+  fetchContacts,
+} from "./operations";
 import { selectContacts } from "./selectors";
 import { selectNameFilter } from "../filters/selectors";
 import { toast } from "react-hot-toast";
@@ -25,6 +30,15 @@ const slice = createSlice({
       .addCase(addContact.fulfilled, (state, action) => {
         state.items.push(action.payload);
         toast.success("Contact added!");
+      })
+      .addCase(editContact.fulfilled, (state, action) => {
+        const index = state.items.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.items[index] = action.payload;
+        }
+        toast.success("Contact updated!");
       })
 
       .addMatcher(
@@ -66,6 +80,9 @@ export const contactReducer = slice.reducer;
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],
   (contacts, filter) => {
+    if (!Array.isArray(contacts)) {
+      return [];
+    }
     return contacts.filter(
       (contact) =>
         contact.name

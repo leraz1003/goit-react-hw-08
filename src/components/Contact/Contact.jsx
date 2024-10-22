@@ -1,6 +1,32 @@
+import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import DeleteModal from "../DeleteModal/DeleteModal";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contacts/operations";
+import EditModal from "../EditModal/EditModal";
 
 const Contact = ({ contact }) => {
+  const dispatch = useDispatch();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const openDeleteModal = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsDeleteModalOpen(false);
+    setIsEditModalOpen(false);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteContact(contact.id));
+  };
+
   const initials = contact.name
     .split(" ")
     .map((word) => word[0])
@@ -24,12 +50,11 @@ const Contact = ({ contact }) => {
             </div>
           </div>
 
-          {/* Додаємо обгортку для кнопок з простором між ними */}
           <div className="flex space-x-2 ml-auto">
             {/* Кнопка редагування */}
             <button
               className="btn btn-circle btn-sm focus:outline-none text-gray-400 flex items-center justify-center bg-transparent hover:bg-gray-100 hover:text-blue-600 transition-colors"
-              // onClick={handleEdit}
+              onClick={openEditModal}
             >
               <FaEdit size={20} />
             </button>
@@ -37,7 +62,7 @@ const Contact = ({ contact }) => {
             {/* Кнопка видалення */}
             <button
               className="btn btn-circle btn-sm focus:outline-none text-gray-400 flex items-center justify-center bg-transparent hover:bg-gray-100 hover:text-red-600 transition-colors"
-              // onClick={openDelModal}
+              onClick={openDeleteModal}
             >
               <FaTrash size={20} />
             </button>
@@ -45,8 +70,10 @@ const Contact = ({ contact }) => {
         </div>
       </div>
 
-      {/* {isDeleteModalOpen && <DeleteModal />}
-      {isEditModalOpen && <EditModal contact={contact} />} */}
+      {isDeleteModalOpen && (
+        <DeleteModal onClose={closeModal} handleDelete={handleDelete} />
+      )}
+      {isEditModalOpen && <EditModal contact={contact} onClose={closeModal} />}
     </>
   );
 };

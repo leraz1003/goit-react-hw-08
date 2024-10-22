@@ -1,12 +1,10 @@
-import { closeDeleteModal } from "../../redux/modal/slice";
-
-const DeleteModal = () => {
+const DeleteModal = ({ onClose, handleDelete }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg relative mt-20">
         <button
           className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-          onClick={closeDeleteModal}
+          onClick={onClose}
         >
           ✕
         </button>
@@ -35,14 +33,14 @@ const DeleteModal = () => {
           <button
             type="button"
             className="btn  bg-blue-500 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition-colors"
-            // onClick={handleDelete}
+            onClick={handleDelete}
           >
             Accept
           </button>
           <button
             type="button"
             className="btn btn-outline text-gray-500 border-gray-300 hover:bg-gray-100 hover:text-black px-4 py-2 rounded-lg transition-colors"
-            // onClick={closeDeleteModal}
+            onClick={onClose}
           >
             Cancel
           </button>
