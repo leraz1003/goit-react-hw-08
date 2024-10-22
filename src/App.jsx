@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { refreshUser } from "./redux/auth/operation";
 import { selectIsLoggedIn, selectIsRefreshing } from "./redux/auth/selectors";
 import { fetchContacts } from "./redux/contacts/operations";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
 
   return isRefreshing ? null : (
     <>
+      <Toaster position="top-center" reverseOrder={true} />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />

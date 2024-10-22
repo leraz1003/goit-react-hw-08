@@ -2,6 +2,7 @@ import { createSelector, createSlice, isAnyOf } from "@reduxjs/toolkit";
 import { addContact, deleteContact, fetchContacts } from "./operations";
 import { selectContacts } from "./selectors";
 import { selectNameFilter } from "../filters/selectors";
+import { toast } from "react-hot-toast";
 
 const initialState = {
   items: [],
@@ -19,9 +20,11 @@ const slice = createSlice({
       })
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.items = state.items.filter((item) => item.id !== action.payload);
+        toast.success("Contact deleted!");
       })
       .addCase(addContact.fulfilled, (state, action) => {
         state.items.push(action.payload);
+        toast.success("Contact added!");
       })
 
       .addMatcher(
@@ -63,20 +66,13 @@ export const contactReducer = slice.reducer;
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],
   (contacts, filter) => {
-    return contacts.filter((contact) =>
-      contact.name.toLowerCase().trim().includes(filter.toLowerCase().trim())
+    return contacts.filter(
+      (contact) =>
+        contact.name
+          .toLowerCase()
+          .trim()
+          .includes(filter.toLowerCase().trim()) ||
+        contact.number.trim().includes(filter.toLowerCase().trim())
     );
   }
 );
-// export const selectFilteredContacts = createSelector(
-//   [selectContacts, selectNameFilter],
-//   (contacts, filter) => {
-//     const lowerCasedFilter = filter.toLowerCase().trim();
-
-//     return contacts.filter(
-//       (contact) =>
-//         contact.name.toLowerCase().includes(lowerCasedFilter) ||
-//         contact.number.includes(lowerCasedFilter) // Фільтр по номеру
-//     );
-//   }
-// );
