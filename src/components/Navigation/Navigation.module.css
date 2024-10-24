@@ -19,6 +19,14 @@
   gap: 20px;
 }
 @media (prefers-color-scheme: dark) {
+  .link {
+    color: #a4acb9;
+  }
+  @media screen and (max-width: 800px) {
+    .link:hover {
+      color: #747fff;
+    }
+  }
   .link:hover {
     color: #ffffff;
   }
@@ -32,9 +40,9 @@
     content: "";
     position: absolute;
     left: 0;
-    bottom: -2px; /* Відступ від тексту до лінії */
+    bottom: -2px;
     width: 100%;
-    height: 2px; /* Висота лінії */
-    background-color: #ffffff; /* Колір лінії */
+    height: 2px;
+    background-color: #ffffff;
   }
 }
