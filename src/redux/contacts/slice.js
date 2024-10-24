@@ -8,6 +8,7 @@ import {
 import { selectContacts } from "./selectors";
 import { selectNameFilter } from "../filters/selectors";
 import { toast } from "react-hot-toast";
+import { logout } from "../auth/operations";
 
 const initialState = {
   items: [],
@@ -31,6 +32,7 @@ const slice = createSlice({
         state.items.push(action.payload);
         toast.success("Contact added!");
       })
+
       .addCase(editContact.fulfilled, (state, action) => {
         const index = state.items.findIndex(
           (item) => item.id === action.payload.id
@@ -40,7 +42,7 @@ const slice = createSlice({
         }
         toast.success("Contact updated!");
       })
-
+      .addCase(logout.fulfilled, () => initialState)
       .addMatcher(
         isAnyOf(
           fetchContacts.pending,
