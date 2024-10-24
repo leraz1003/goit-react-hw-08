@@ -9,8 +9,10 @@
   transition: color 0.3s;
 }
 
-.link:hover {
-  color: black;
+@media screen and (min-width: 1024px) {
+  .link:hover {
+    color: black;
+  }
 }
 
 .activeLink {
@@ -21,4 +23,24 @@
 .list {
   display: flex;
   gap: 20px;
+}
+@media (prefers-color-scheme: dark) {
+  .link {
+    color: #d7deeb;
+  }
+
+  .activeLink {
+    color: #ffffff;
+    font-weight: bold;
+    position: relative;
+  }
+  .activeLink::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #ffffff;
+  }
 }
