@@ -14,7 +14,7 @@
 
 @media (prefers-color-scheme: dark) {
   .header {
-    background-color: #1c1c1c; /* Темний фон */
+    background-color: #4a00ff; /* Темний фон */
     color: white; /* Світлий текст */
     box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Світла тінь */
   }
