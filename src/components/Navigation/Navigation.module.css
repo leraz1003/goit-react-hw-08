@@ -18,3 +18,23 @@
   display: flex;
   gap: 20px;
 }
+@media (prefers-color-scheme: dark) {
+  .link:hover {
+    color: #ffffff;
+  }
+
+  .activeLink {
+    color: #ffffff;
+    font-weight: bold;
+    position: relative;
+  }
+  .activeLink::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px; /* Відступ від тексту до лінії */
+    width: 100%;
+    height: 2px; /* Висота лінії */
+    background-color: #ffffff; /* Колір лінії */
+  }
+}
