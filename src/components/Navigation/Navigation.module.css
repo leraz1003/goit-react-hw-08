@@ -4,9 +4,10 @@
   font-size: 18px;
   transition: color 0.3s;
 }
-
-.link:hover {
-  color: black;
+@media screen and (min-width: 1024px) {
+  .link:hover {
+    color: black;
+  }
 }
 
 .activeLink {
@@ -21,14 +22,6 @@
 @media (prefers-color-scheme: dark) {
   .link {
     color: #a4acb9;
-  }
-  @media screen and (max-width: 800px) {
-    .link:hover {
-      color: #747fff;
-    }
-  }
-  .link:hover {
-    color: #ffffff;
   }
 
   .activeLink {
@@ -46,3 +39,10 @@
     background-color: #ffffff;
   }
 }
+
+/* 
+@media screen and (max-width: 800px) {
+  .link:hover {
+    color: #747fff;
+  }
+} */
