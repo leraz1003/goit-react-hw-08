@@ -1,7 +1,7 @@
 .header {
-  padding: 15px; /* Відступи всередині хедера */
+  padding: 15px;
   background-color: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тінь */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 }
 .nav {
@@ -10,4 +10,20 @@
   align-items: center;
   gap: 15px;
   padding: 10px 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .header {
+    background-color: #1c1c1c; /* Темний фон */
+    color: white; /* Світлий текст */
+    box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1); /* Світла тінь */
+  }
+
+  .nav {
+    color: white;
+  }
+
+  a {
+    color: lightblue;
+  }
 }
